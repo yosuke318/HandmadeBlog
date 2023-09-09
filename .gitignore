@@ -2,4 +2,4 @@ frontend/package-lock.json
 frontend/node_modules
 .idea/*
 */__pycache__/*
-data
+db
