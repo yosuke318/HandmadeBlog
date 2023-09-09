@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  backend:
+    container_name: blog_backend
+    build: .
+    volumes:
+      - ../../backend:/backend
+    ports:
+      - 8000:8000
+    image: blog-img:django
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0.25
+    container_name: blog_db
+    volumes:
+      - ../../db:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=django
+      - MYSQL_USER=keisuke
+      - MYSQL_PASSWORD=honda
+      - MYSQL_ROOT_PASSWORD=password
