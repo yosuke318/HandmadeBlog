@@ -3,3 +3,4 @@ frontend/node_modules
 .idea/*
 */__pycache__/*
 db
+backend/my_blog/migrations
