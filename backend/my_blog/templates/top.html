@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アドミニストレータのトップページ</title>
+</head>
+<body>
+    <h2>ユーザー一覧</h2>
+    {% for user in users %}
+    <li>{{ user.username }}</li>
+    {% endfor %}
+</body>
+</html>
