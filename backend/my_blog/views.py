@@ -17,15 +17,13 @@ def fetch_users_list(request):
 
 def register(request):
     if request.method == 'POST':
-        # POSTリクエストの場合、フォームデータを処理
+
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            # フォームが有効な場合、ユーザーを作成しログイン
             user = form.save()
             login(request, user)
-            return redirect('top')  # ユーザーをホームページにリダイレクト
+            return redirect('top')
     else:
-        # GETリクエストの場合、新しいフォームを表示
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
