@@ -83,7 +83,10 @@ DATABASES = {
         'USER': 'keisuke',
         'PASSWORD': 'honda',
         'HOST': 'db',
-        'POST': 3306
+        'POST': 3306,
+        'TEST': {
+            'MIRROR': "default",
+        },
     }
 }
 
