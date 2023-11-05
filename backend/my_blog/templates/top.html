@@ -12,6 +12,7 @@
     <a href="{% url 'register' %}">登録</a>
     {% if user.is_authenticated %}
     <a href="{% url 'logout' %}">ログアウト</a>
+    <a href="{% url 'redirect_post_article' %}">記事投稿</a>
     {% else %}
     <a href="{% url 'login' %}">ログイン</a>
     {% endif %}

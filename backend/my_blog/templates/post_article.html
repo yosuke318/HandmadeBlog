@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+{% block content %}
+  <h2>記事を投稿</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">投稿</button>
+  </form>
+{% endblock %}
+</html>
