@@ -31,5 +31,5 @@ urlpatterns = [
          ), name='logout'),
     path('', fetch_users_list, name='top'),
     path('register/', views.register, name='register'),
-    path('redirect_post/', views.redirect_post_article, name='redirect_post_article'),
+    path('redirect_post/', views.post_article, name='post_article'),
 ]

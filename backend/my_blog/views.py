@@ -42,5 +42,8 @@ def post_article(request):
     return render(request, 'post_article.html', {'form': form})
 
 
-def redirect_post_article(request):
-    return render(request, 'post_article.html')
+# def redirect_post_article(request):
+#
+#     print('test:', request)
+#
+#     return render(request, 'post_article.html')
