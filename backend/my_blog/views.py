@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from .models import Article
 
 from my_blog.forms import ArticleForm
 
@@ -36,14 +37,20 @@ def post_article(request):
             article = form.save(commit=False)
             article.author = request.user
             article.save()
-            return redirect('article_list')
+            return redirect('post_article')
     else:
         form = ArticleForm()
-    return render(request, 'post_article.html', {'form': form})
+
+    user_posts = Article.objects.filter(author=request.user)
+
+    context = {
+        'form': form,
+        'posts': user_posts
+    }
+    return render(request, 'post_article.html', context)
 
 
-# def redirect_post_article(request):
-#
-#     print('test:', request)
-#
-#     return render(request, 'post_article.html')
+def redirect_post_article(request):
+    print('test:', request)
+
+    return render(request, 'post_article.html')

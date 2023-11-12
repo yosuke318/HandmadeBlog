@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>記事投稿</title>
-</head>
-<body>
-    <h1>記事を投稿する</h1>
+    <head>
+        <title>記事投稿</title>
+    </head>
+    <body>
+        <h1>記事を投稿する</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        <label for="title">タイトル:</label>
-        <input type="text" name="title" id="title" required>
-        <br>
-        <label for="content">内容:</label>
-        <textarea name="content" id="content" required></textarea>
-        <br>
-        <button type="submit">投稿</button>
+        <form method="post">
+            {% csrf_token %}
+            {#        <label for="user" >ユーザID:</label>#}
+            {#        <li>{{ user.id }}</li>#}
+            {#        <label for="title">タイトル:</label>#}
+            {#        <input type="text" name="title" id="title" required>#}
+            {#        <br>#}
+            {#        <label for="content">内容:</label>#}
+            {#        <textarea name="content" id="content" required></textarea>#}
+            <br>
+            {{ form }}
+            <br>
+            <button type="submit">投稿</button>
+
+        </form>
         <button onclick="location.href='../'">トップページ！</button>
-    </form>
-</body>
+
+        <h1>投稿した記事</h1>
+        {% for post in posts %}
+            <div>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    </body>
 </html>
