@@ -5,14 +5,14 @@ from django.urls import reverse
 from my_blog.models import Article
 
 
-class IndexTests(TestCase):
+class LoginTests(TestCase):
     """IndexViewのテストクラス"""
 
     def setUp(self):
         """テスト環境準備のため、テストユーザを用意"""
         self.user = User.objects.create_user(username='testuser', password='testpassword')
 
-    def test_get(self):
+    def test_get_by_registered_user(self):
         """URLパターンloginにアクセス"""
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
@@ -20,6 +20,24 @@ class IndexTests(TestCase):
         # ユーザーでログイン(パスワードかユーザ名が一致していないとエラー)
         response = self.client.login(username='testuser', password='testpassword123')
         self.assertTrue(response)
+
+    def test_get_with_different_password(self):
+        """パスワードが一致しないユーザによるログイン確認"""
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+
+        # パスワードが一致しないユーザのログイン
+        response = self.client.login(username='testuser', password='paspaspas')  # ログイン結果Falseを返す
+        self.assertFalse(response)
+
+    def test_get_with_different_username(self):
+        """ユーザ名が一致しないユーザによるログイン確認"""
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+
+        # パスワードが一致しないユーザのログイン
+        response = self.client.login(username='gorila', password='testpassword123')  # ログイン結果Falseを返す
+        self.assertFalse(response)
 
 
 class RegistrationTestCase(TestCase):
@@ -42,7 +60,10 @@ class RegistrationTestCase(TestCase):
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
     def test_registration_with_existing_user(self):
-        # 既存のユーザーを作成
+        """
+        既存のユーザを作成してみる
+        :return:
+        """
         User.objects.create_user(username='existinguser', password='existingpassword')
 
         # register関数を用い、既存のユーザー名でユーザー登録を試みる
