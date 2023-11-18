@@ -47,10 +47,11 @@ def post_article(request):
         'form': form,
         'posts': user_posts
     }
+    # print(form.errors['content'][0])
     return render(request, 'post_article.html', context)
 
 
-def redirect_post_article(request):
+def post_article_article(request):
     print('test:', request)
 
     return render(request, 'post_article.html')
