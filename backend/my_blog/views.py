@@ -8,6 +8,11 @@ from my_blog.forms import ArticleForm
 
 
 def fetch_users_list(request):
+    """
+    Topページにてユーザ一覧を表示（確認用）
+    :param request:
+    :return:
+    """
     user = get_user_model()
 
     users = user.objects.all()
@@ -18,6 +23,11 @@ def fetch_users_list(request):
 
 
 def register(request):
+    """
+    ユーザ登録ページにて登録する
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
 
         form = UserCreationForm(request.POST)
@@ -31,6 +41,12 @@ def register(request):
 
 
 def post_article(request):
+    """
+    ログインユーザによる記事投稿とhtmlへ記事情報を提供
+    :param request:
+    :return:
+    """
+
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
@@ -47,11 +63,6 @@ def post_article(request):
         'form': form,
         'posts': user_posts
     }
-    # print(form.errors['content'][0])
     return render(request, 'post_article.html', context)
 
 
-def post_article_article(request):
-    print('test:', request)
-
-    return render(request, 'post_article.html')

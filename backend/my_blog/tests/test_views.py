@@ -54,7 +54,8 @@ class RegistrationTestCase(TestCase):
 
         # ユーザー登録が失敗し、エラーメッセージが表示される
         self.assertEqual(response.status_code, 200)  # ページが再表示される
-        self.assertContains(response, "A user with that username already exists.")
+
+        self.assertContains(response, "同じユーザー名が既に登録済みです。")
 
 
 class PostArticleTestCase(TestCase):
@@ -96,7 +97,7 @@ class PostArticleTestCase(TestCase):
         self.assertEqual(first_record.content, 'Test Content')
         self.assertEqual(first_record.author, self.user)  # レコード追加したuserのobjectの情報が一致
 
-    def test_post_article_view_with_invalid_data(self):
+    def test_post_article_with_invalid_content(self):
         """
         異常なフォームデータを用意してPOSTリクエスト。内部的な機能のバリデーションテスト
         """
@@ -108,7 +109,22 @@ class PostArticleTestCase(TestCase):
         self.assertEqual(response.status_code, 200)  # フォームが無効なため302へリダイレクトされない
 
         # フォームエラーが表示されているか確認（日本語ver）
-        self.assertContains(response, 'このフィールドは必須です。')
-        self.assertContains(response, 'このフィールドは必須です。')
+        self.assertFormError(response, 'form', 'contents', 'このフィールドは必須です。')
+
+        self.assertEqual(Article.objects.count(), 0)
+
+    def test_post_article_with_invalid_title(self):
+        """
+        異常なフォームデータを用意してPOSTリクエスト。内部的な機能のバリデーション機能のテスト
+        """
+
+        invalid_form_data = {'title': '', 'content': 'Test Content'}  # contentがない不正なデータ
+
+        response = self.client.post(reverse('post_article'), data=invalid_form_data)  # 不正データ登録
+
+        self.assertEqual(response.status_code, 200)  # フォームが無効なため302へリダイレクトされない
+
+        # フォームエラーが表示されているか確認（日本語ver）
+        self.assertFormError(response, 'form', 'title', 'このフィールドは必須です。')
 
         self.assertEqual(Article.objects.count(), 0)

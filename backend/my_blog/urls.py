@@ -19,6 +19,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 urlpatterns = [
+    # ログインとログアウトはdjangoの組み込みメソッドを使用
     path('login/',
          LoginView.as_view(
              redirect_authenticated_user=True,
