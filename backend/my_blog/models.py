@@ -1,21 +1,15 @@
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
-class Users(models.Model):
-    user_id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=200, null=False, blank=False)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+class Article(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    pub_date = models.DateTimeField(default=timezone.now)
 
-
-class Articles(models.Model):
-    article_id = models.BigAutoField(primary_key=True)
-    user_id = models.ForeignKey(
-        Users,
-        on_delete=models.PROTECT,
-        db_column='user_id',
-        blank=False
-    )
-    contents = models.CharField(max_length=255, null=False, blank=False)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title
