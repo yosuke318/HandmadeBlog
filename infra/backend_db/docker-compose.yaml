@@ -9,6 +9,7 @@ services:
     ports:
       - 8000:8000
     image: blog-img:django
+    # todo depends_onは起動待ちではなく稼働待ちなので、shellscriptで制御する(https://kotaroooo0-dev.hatenablog.com/entry/2020/07/25/000000)
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
