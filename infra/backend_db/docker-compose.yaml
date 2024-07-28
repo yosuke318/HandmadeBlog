@@ -9,7 +9,7 @@ services:
     ports:
       - 8000:8000
     image: blog-img:django
-    command: sh wait_db.sh db keisuke honda python manage.py runserver 0.0.0.0:8000
+    command: sh wait_db.sh django keisuke honda python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
   db:
