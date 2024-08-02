@@ -1,4 +1,4 @@
-# HandmadeBlog
+# 手作りブログ
 
 ``````
 docker compose build
